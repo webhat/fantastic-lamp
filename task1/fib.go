@@ -1,11 +1,9 @@
-package main
+package task1
 
 import (
 	"fmt"
 	"math"
 )
-
-var fibs = []int{0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89}
 
 // IsFibCalc checks if the provided integer is a Fibonacci number
 func IsFibCalc(n int) bool {
