@@ -25,6 +25,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"strings"
 )
 
 // Command-line flags.
@@ -42,7 +43,8 @@ func main() {
 // It serves the user interface (it's an http.Handler)
 // and polls the remote repository for changes.
 type Server struct {
-	Expr string
+	Expr  string
+	Value string
 }
 
 // NewServer returns an initialized outyet server.
@@ -54,13 +56,25 @@ func NewServer() *Server {
 // ServeHTTP implements the HTTP user interface.
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	s.Expr = "XI+I"
+	s.Value = roman.RomanNumeralCalculate(s.Expr)
+
+	keys, ok := r.URL.Query()["n"]
+
+	log.Println(keys)
+
+	if !ok || len(keys[0]) < 1 {
+		s.Expr = "(unknown)"
+	} else {
+		s.Expr = strings.ReplaceAll(keys[0], " ", "+")
+		s.Value = roman.RomanNumeralCalculate(s.Expr)
+	}
+
 	data := struct {
 		Expr  string
 		Value string
 	}{
 		s.Expr,
-		//	"XI",
-		roman.RomanNumeralCalculate(s.Expr),
+		s.Value,
 	}
 	err := tmpl.Execute(w, data)
 	if err != nil {
@@ -75,5 +89,6 @@ var tmpl = template.Must(template.New("tmpl").Parse(`
 	<h1>
 	{{.Value}}
 	</h1>
-</center></body></html>
+</center>
+<h3>blaat</h3></body></html>
 `))
