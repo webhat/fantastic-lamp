@@ -15,6 +15,7 @@ func TestFizzBuzzPinkFlamingo(t *testing.T) {
 		{"Ten", args{10}, "Buzz"},
 		{"Twelve", args{12}, "Fizz"},
 		{"Fifteen", args{15}, "FizzBuzz"},
+		{"Six-Thousand Sixty-five", args{6765}, "Pink Flamingo"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

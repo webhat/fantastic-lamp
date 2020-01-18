@@ -21,14 +21,14 @@ func FizzBuzzPinkFlamingo(n int) string {
 		}
 		return "FizzBuzz"
 	}
+	if fib {
+		return "Flamingo"
+	}
 	if fizz {
 		return "Fizz"
 	}
 	if buzz {
 		return "Buzz"
-	}
-	if fib {
-		return "Flamingo"
 	}
 	return strconv.Itoa(n)
 }
